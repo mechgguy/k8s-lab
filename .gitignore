@@ -1,0 +1,13 @@
+# Backup and temporary editor files
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment / local secret or kubeconfig files (never commit credentials)
+.env
+.env.*
+kubeconfig*
+*.pem
+*.key
