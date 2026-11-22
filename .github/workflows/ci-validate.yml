@@ -1,0 +1,27 @@
+name: Validate K8s Manifests & Scripts
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check shell script syntax
+        run: bash -n deploy-staging.sh
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Dry-run validate Kubernetes manifests
+        run: |
+          kubectl apply --dry-run=client -f role-ci-deployer.yaml
+          kubectl apply --dry-run=client -f rolebinding-ci-deployer.yaml
+          kubectl apply --dry-run=client -f staging-deployment.yaml
+          kubectl apply --dry-run=client -f staging-service.yaml
