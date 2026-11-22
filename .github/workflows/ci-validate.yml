@@ -11,13 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check shell script syntax
         run: bash -n deploy-staging.sh
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
+      - name: Install kubectl
+        run: |
+          curl -sSLO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/kubectl
+          kubectl version --client
 
       - name: Dry-run validate Kubernetes manifests
         run: |
