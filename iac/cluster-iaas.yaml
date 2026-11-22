@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iaas-topology-spec
+  namespace: staging
+data:
+  provider: "local-kind-docker-iaas"
+  kubernetes_version: "v1.31.2"
+  control_plane_nodes: "1"
+  worker_nodes: "1"
+  service_cidr: "10.96.0.0/16"
